@@ -1,0 +1,34 @@
+import java.util.*; 
+public class DisasterReliefResourceAllocation { 
+    public static void main(String[] args) { 
+        Scanner sc = new Scanner(System.in); 
+System.out.print("Enter number of trucks: "); 
+        int n = sc.nextInt(); 
+int[] capacity = new int[n]; 
+        int[] distance = new int[n]; 
+System.out.println("Enter capacities (tons):"); 
+        for (int i = 0; i < n; i++) { 
+            capacity[i] = sc.nextInt(); 
+        } 
+System.out.println("Enter distances (km):"); 
+        for (int i = 0; i < n; i++) { 
+            distance[i] = sc.nextInt(); 
+        } 
+ System.out.print("Enter total mission distance limit (L): "); 
+        int L = sc.nextInt(); 
+ int[][] dp = new int[n + 1][L + 1]; 
+// Dynamic Programming Logic 
+        for (int i = 1; i <= n; i++) { 
+            for (int j = 1; j <= L; j++) { 
+                if (distance[i - 1] <= j) { 
+  dp[i][j] = Math.max(capacity[i - 1] + dp[i - 1][j - distance[i - 1]], dp[i - 1][j]); 
+                } else { 
+                    dp[i][j] = dp[i - 1][j]; 
+                } 
+            } 
+        } 
+ 
+        System.out.println("\nMaximum total aid delivered: " + dp[n][L] + " tons"); 
+        sc.close(); 
+    } 
+}
